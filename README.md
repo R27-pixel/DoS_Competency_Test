@@ -52,12 +52,14 @@ In terminal
 cargo run
 
 Output
+
 ![Screenshot 2025-04-19 002120](https://github.com/user-attachments/assets/0950f7f4-8cf0-4a09-a15b-4abc251ad871)
 
 In second Terminal
 cargo run
 
 Output
+
 ![Screenshot 2025-04-19 002157](https://github.com/user-attachments/assets/9e2193d5-4721-4b53-90aa-db99b536d2f6)
 
 Usage
