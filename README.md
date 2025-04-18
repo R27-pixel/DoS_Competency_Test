@@ -1,75 +1,109 @@
-# DoS_Competency_Test
+# P2P Node with Tower Service
 
-P2P Node with Tower Service
-This project implements a simple P2P (peer-to-peer) network using libp2p and a Tower service to handle request/response (REQ/REP) messages. The goal is to demonstrate communication between peers using a custom protocol, avoiding libp2p's default gossip protocol.
+A robust peer-to-peer networking implementation using libp2p with a Tower service architecture to handle request/response communication patterns.
 
-Features
-libp2p for peer-to-peer communication
+## Overview
 
-Tower service to handle incoming REQ/REP messages
+This project demonstrates a clean implementation of a peer-to-peer network that uses a custom protocol for direct communication between nodes rather than libp2p's default gossip protocol. The implementation leverages Tower services for handling asynchronous request/response patterns in a structured manner.
 
-Request/Response protocol to exchange messages between peers
+## Features
 
-mDNS (Multicast DNS) for discovering peers on the network
+- **libp2p Foundation**: Built on the libp2p networking stack for peer discovery and connectivity
+- **Tower Service Architecture**: Implements a Tower service to handle incoming requests and responses
+- **Custom Protocol**: Uses a request/response protocol for direct peer communication
+- **Automatic Peer Discovery**: Utilizes mDNS for peer discovery on local networks
+- **QUIC Transport**: Features secure and efficient communication using the QUIC protocol
+- **External Address Management**: Handles external networking addresses for proper peer visibility
 
-QUIC transport for secure and fast communication
+## Architecture
 
-External address handling to manage peer-to-peer network visibility
+The project is organized into three main components:
 
-Project Structure
+- **Main Runtime**: Manages the libp2p swarm and event loop
+- **Service Handler**: Implements Tower service functionality for processing messages
+- **Protocol Definition**: Defines custom request/response types and serialization
+
+## Project Structure
+
+```
 src/
-├── main.rs         # Entry point with swarm event loop
-├── service.rs      # Tower service handling greet messages
-├── protocol.rs     # Request/response types
+  ├── main.rs         # Entry point and swarm event handler
+  ├── service.rs      # Tower service implementation for message handling
+  ├── protocol.rs     # Request/response protocol types and serialization
+```
 
-Dependencies
-libp2p: Peer-to-peer networking library
+## Dependencies
 
-futures: For working with async tasks and streams
+- **libp2p**: Core peer-to-peer networking capabilities
+- **tower**: Service abstraction for building network applications
+- **tokio**: Asynchronous runtime for Rust
+- **futures**: Tools for working with asynchronous code
+- **serde**: Serialization/deserialization framework
+- **tracing-subscriber**: Logging and monitoring functionality
 
-tokio: Asynchronous runtime for Rust
+## Getting Started
 
-serde: Serialization and deserialization of messages
+### Prerequisites
 
-tower: A library for building services and middleware
+- Rust and Cargo installed on your system
 
-tracing-subscriber: For logging and monitoring
+### Installation
 
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/R27-pixel/DoS_Competency_Test.git
+   cd p2p-node
+   ```
 
-Setup
-1)Clone the repository:
-git clone  https://github.com/R27-pixel/DoS_Competency_Test.git
-cd p2p-node
+2. Build the project:
+   ```bash
+   cargo build
+   ```
 
+### Running the Node
 
-2)Add dependencies: The Cargo.toml file includes the necessary dependencies for building the P2P node and Tower service.
+To start a P2P node:
 
-3)Build the project:
-cargo build
-
-4)Run the P2P node:
-In terminal
+```bash
 cargo run
+```
 
-Output
+For testing peer-to-peer functionality, open a second terminal and run another instance:
 
-![Screenshot 2025-04-19 002120](https://github.com/user-attachments/assets/0950f7f4-8cf0-4a09-a15b-4abc251ad871)
-
-In second Terminal
+```bash
 cargo run
+```
 
-Output
+## How It Works
 
-![Screenshot 2025-04-19 002157](https://github.com/user-attachments/assets/9e2193d5-4721-4b53-90aa-db99b536d2f6)
+1. **Node Initialization**: Each node starts up and configures its libp2p swarm
+2. **Peer Discovery**: mDNS discovers other peers on the local network
+3. **Connection Establishment**: Nodes establish connections with discovered peers
+4. **Message Exchange**: Nodes exchange GreetRequest and GreetResponse messages using the custom protocol
+5. **Service Handling**: The Tower service processes incoming requests and generates appropriate responses
 
-Usage
-Once the node is running, it will:
+## Example Output
 
-1)Discover peers via mDNS.
+When running two nodes on the same machine, you'll see them discover each other and exchange greeting messages:
 
-2)Establish connections with discovered peers.
+First Terminal
 
-3)Exchange GreetRequest and GreetResponse messages.
+![Node 1 Output](https://github.com/user-attachments/assets/0950f7f4-8cf0-4a09-a15b-4abc251ad871)
 
-4)Respond to incoming requests
+Second Terminal
 
+![Node 2 Output](https://github.com/user-attachments/assets/9e2193d5-4721-4b53-90aa-db99b536d2f6)
+
+## Technical Details
+
+### Network Components
+
+- **Transport**: QUIC protocol for secure and efficient packet delivery
+- **Discovery**: mDNS for automatic peer detection on local networks
+- **Message Format**: Custom protocol messages serialized with serde
+- **Service Architecture**: Tower request/response pattern for handling communication
+
+### Message Types
+
+- **GreetRequest**: Initial message sent from one peer to another
+- **GreetResponse**: Response returned when a greeting is received
